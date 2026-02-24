@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Mencho</title>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dahlia: {
+                            cream: '#F2F1EF',
+                            taupe: '#B1A6A4',
+                            'blue-gray': '#697184',
+                            blush: '#D8CFD0',
+                            charcoal: '#413F3D',
+                            border: '#E5E2DF'
+                        }
+                    },
+                    fontFamily: {
+                        display: ["'Playfair Display'", 'serif'],
+                        body: ["'Inter'", 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F2F1EF;
+            --taupe: #B1A6A4;
+            --blue-gray: #697184;
+            --blush: #D8CFD0;
+            --charcoal: #413F3D;
+            --border: #E5E2DF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--cream);
+            color: var(--charcoal);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            color: var(--charcoal);
+        }
+
+        p {
+            color: var(--blue-gray);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        .nav-underline {
+            position: relative;
+            color: var(--charcoal) !important;
+            transition: color 0.25s ease;
+        }
+
+        .nav-underline::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 1px;
+            background-color: var(--taupe);
+            transition: width 0.25s ease;
+        }
+
+        .nav-underline:hover {
+            color: var(--taupe) !important;
+        }
+
+        .nav-underline:hover::after {
+            width: 100%;
+        }
+
+        /* Cards */
+        .soft-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(65, 63, 61, 0.05);
+            transition: all 0.3s ease;
+            color: var(--charcoal);
+        }
+
+        .soft-card p {
+            color: var(--blue-gray);
+        }
+
+        .soft-card h3,
+        .soft-card h2 {
+            color: var(--charcoal);
+        }
+
+        .soft-card:hover {
+            box-shadow: 0 20px 50px rgba(65, 63, 61, 0.12);
+            transform: translateY(-4px) scale(1.01);
+            border-color: var(--taupe);
+        }
+
+        /* Hero Section */
+        .hero-bg {
+            position: relative;
+            background: var(--cream);
+            border-radius: 20px;
+            background-image: url('./images/el-mencho-bg.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(65, 63, 61, 0.7);
+            z-index: 1;
+            border-radius: 20px;
+        }
+
+        .hero-bg > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Buttons */
+        .buy-now {
+            background: var(--charcoal);
+            color: var(--cream);
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 8px;
+            border: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        .buy-now:hover {
+            background: var(--taupe);
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(177, 166, 164, 0.15);
+        }
+
+        /* Section Backgrounds */
+        .soft-section-bg {
+            background: rgba(216, 207, 208, 0.25);
+            border-radius: 16px;
+        }
+
+        /* Gallery Images */
+        .gallery-img {
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(65, 63, 61, 0.05);
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(65, 63, 61, 0.15);
+            filter: brightness(1.05);
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1 !important;
+            transform: translateY(0);
+        }
+
+        .slide-up {
+            opacity: 0;
+            transform: translateY(80px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .slide-up.visible {
+            opacity: 1 !important;
+            transform: translateY(0);
+        }
+
+        .gallery-img {
+            opacity: 0;
+            transform: scale(0.85);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .gallery-img.visible {
+            opacity: 1 !important;
+            transform: scale(1);
+        }
+
+        .step-box {
+            opacity: 0;
+            transform: scale(0.75) translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .step-box.visible {
+            opacity: 1 !important;
+            transform: scale(1) translateY(0);
+        }
+
+        .footer-slide {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        .footer-slide.visible {
+            opacity: 1 !important;
+            transform: translateY(0);
+        }
+
+        /* Lightbox */
+        #lightbox {
+            background: rgba(65, 63, 61, 0.7);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Scrollbar */
+        .scrollbar-thin::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: var(--taupe);
+            border-radius: 10px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+            background: var(--blue-gray);
+        }
+
+        /* Additional Animations */
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .hero-bg {
+            animation: gentle-float 6s ease-in-out infinite;
+        }
+
+        img[alt="El Mencho Hero Image"] {
+            animation: gentle-float 5s ease-in-out infinite;
+            transition: all 0.4s ease;
+        }
+
+        img[alt="El Mencho Hero Image"]:hover {
+            transform: scale(1.05) !important;
+            filter: brightness(1.08);
+        }
+
+        h1, h2 {
+            opacity: 0;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        h1 { animation-delay: 0.2s; }
+        h2:not([style*="font-family: 'Playfair"]) { animation-delay: 0.4s; }
+
+        nav h2 {
+            opacity: 1 !important;
+            animation: none !important;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-dahlia-cream text-dahlia-charcoal">
+
+    <!-- Main Container -->
+    <div class="w-full max-w-6xl mx-auto px-4 sm:px-6">
+        
+        <!-- Navigation -->
+        <nav class="sticky top-0 z-40 flex flex-col sm:flex-row items-center justify-between py-6 px-4 sm:px-6 border-b border-dahlia-border gap-4 sm:gap-0 mb-6 sm:mb-0" style="background-color: #D8CFD0; opacity: 1 !important;">
+            <div class="flex items-center gap-3 sm:gap-4">
+                <img src="./images/el-mencho-logo.jpeg" alt="El Mencho Logo" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover">
+                <h2 class="text-lg sm:text-2xl font-semibold text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">El Mencho CTO</h2>
+            </div>
+            
+            <ul class="flex gap-6 sm:gap-8 text-sm sm:text-base">
+                <li><a href="#about" class="nav-underline font-medium">About Us</a></li>
+                <li><a href="#steps" class="nav-underline font-medium">How To Buy</a></li>
+                <li><a href="https://x.com/elmenchofan" target="_blank" class="nav-underline font-medium">X Community</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-bg py-16 sm:py-24 px-6 sm:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-8 sm:gap-12 lg:gap-16">
+                <div class="flex-1 text-center lg:text-left order-2 lg:order-1">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6" style="font-family: 'Playfair Display', serif; letter-spacing: 0.5px; color: #FFFFFF; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);">EL MENCHO</h1>
+                    <p class="text-base sm:text-lg mb-8 leading-relaxed" style="color: #FFFFFF; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);">
+                       $MENCHO is a community led meme coin. Dev is gone and holders are building it forward.
+                    </p>
+                    <a href="https://pump.fun/coin/2WdiVXhhV4ZFjDJszWx4iqgMfACRNFutxfXEWxWPpump" target="_blank" class="buy-now">
+                        BUY NOW
+                    </a>
+                </div>
+                <div class="flex-1 order-1 lg:order-2">
+                    <img src="./images/el-mencho-logo.jpeg" alt="El Mencho Hero Image" class="w-full max-w-md mx-auto rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- GIF Section with Stats -->
+        <section class="relative py-16 sm:py-24 px-6 sm:px-8 mb-8 rounded-2xl overflow-hidden soft-card fade-in-up">
+            <div class="relative z-10 flex flex-col gap-12 sm:gap-16">
+                <!-- Content -->
+                <div class="soft-card p-8 sm:p-10 rounded-xl">
+                    <h3 class="text-2xl sm:text-3xl font-semibold mb-4 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">EL MENCHO</h3>
+                    <p class="text-dahlia-blue-gray leading-relaxed">
+                       $MENCHO is now a Community Takeover. The original dev is gone and the holders are in control. Liquidity is secured and the project is being rebuilt by the community for steady long term growth.
+                    </p>
+                </div>
+
+                <!-- Token Stats -->
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">Live Token Stats</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="soft-card p-6 sm:p-8 rounded-xl text-center">
+                            <h3 class="text-sm font-semibold text-dahlia-blue-gray mb-3">PRICE</h3>
+                            <p id="price" class="text-2xl sm:text-3xl font-semibold text-dahlia-taupe">Loading...</p>
+                        </div>
+
+                        <div class="soft-card p-6 sm:p-8 rounded-xl text-center">
+                            <h3 class="text-sm font-semibold text-dahlia-blue-gray mb-3">LIQUIDITY</h3>
+                            <p id="liquidity" class="text-2xl sm:text-3xl font-semibold text-dahlia-taupe">Loading...</p>
+                        </div>
+
+                        <div class="soft-card p-6 sm:p-8 rounded-xl text-center">
+                            <h3 class="text-sm font-semibold text-dahlia-blue-gray mb-3">MARKET CAP</h3>
+                            <p id="mc" class="text-2xl sm:text-3xl font-semibold text-dahlia-taupe">Loading...</p>
+                        </div>
+
+                        <div class="soft-card p-6 sm:p-8 rounded-xl text-center">
+                            <h3 class="text-sm font-semibold text-dahlia-blue-gray mb-3">24H VOLUME</h3>
+                            <p id="vol" class="text-2xl sm:text-3xl font-semibold text-dahlia-taupe">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart Section -->
+        <div class="soft-card p-6 sm:p-8 rounded-xl mb-8">
+            <h3 class="text-2xl sm:text-3xl font-semibold mb-6 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">Live Market Data</h3>
+            <div class="w-full overflow-x-auto rounded-lg">
+                <iframe src="https://dexscreener.com/solana/9bTf3SMyrCf9Rufehn8vtMd2BFEZGRkHTtB4KY3UZemr?embed=1&theme=light"
+                        width="100%"
+                        height="600"
+                        class="border-0 rounded-lg min-w-full"
+                        style="min-height: 600px;">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Narrative Section -->
+        <section class="py-16 sm:py-24 mb-8">
+            <div class="flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16">
+                <div class="flex-1 soft-card p-8 sm:p-10 rounded-xl">
+                    <h2 id="about" class="text-3xl sm:text-4xl font-semibold mb-6 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">EL MENCHO NARRATIVE</h2>
+                    <p class="text-dahlia-blue-gray leading-relaxed text-base sm:text-lg">
+                        El Mencho ($MENCHO) started as a meme coin built around breaking news and online hype. At the beginning it was mostly about shock value and trending topics. Now the story has changed.
+
+The original developer is no longer active so the community took over. This is called a Community Takeover or CTO. Mint and freeze permissions have been removed and liquidity is secured. Because of this the holders are now in control.
+
+The focus is no longer on real world events. Instead the goal is to build a strong community project. The plan is steady growth, clear communication, active members and long term progress.
+
+What started as chaos is now a community led rebuild. The future of $MENCHO is in the hands of the holders.</p>
+                </div>
+            
+                <div class="flex-1">
+                    <img src="./images/el-mencho-1.jpeg" alt="El Mencho narrative" class="w-full rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl object-cover h-full">
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="my-16 slide-up">
+             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-center mb-10 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">Gallery</h1>
+             <div class="soft-card p-8 rounded-2xl">
+                 <div class="flex overflow-x-auto space-x-6 scrollbar-thin">
+                    <img src="./images/el-mencho-2.jpeg" class="gallery-img w-64 h-40 object-cover rounded-lg flex-shrink-0" />
+                    <img src="./images/el-mencho-3.jpeg" class="gallery-img w-64 h-40 object-cover rounded-lg flex-shrink-0" />
+                    <img src="./images/el-mencho-4.jpeg" class="gallery-img w-64 h-40 object-cover rounded-lg flex-shrink-0" />
+                    <img src="./images/el-mencho-bg.jpeg" class="gallery-img w-64 h-40 object-cover rounded-lg flex-shrink-0" />
+                 </div>
+             </div>
+        </section>
+
+        <div id="lightbox" class="fixed inset-0 flex items-center justify-center hidden">
+            <img id="lightboxImg" class="max-w-full max-h-full rounded-xl shadow-2xl" />
+        </div>
+
+        <!-- News Article Section -->
+        <section class="py-16 sm:py-24 mb-8 slide-up">
+            <div class="soft-card p-8 sm:p-10 rounded-xl">
+                <h2 class="text-3xl sm:text-4xl font-semibold mb-6 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">BBC NEWS REPORT</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-4 text-dahlia-blue-gray" style="font-family: 'Playfair Display', serif;">Recent Coverage</h3>
+                    <p class="text-dahlia-blue-gray text-base sm:text-lg leading-relaxed mb-6">
+                        This article from BBC News covers the reported events that originally sparked online discussions around the $MENCHO meme narrative. It is shared here for context and transparency.
+                    </p>
+                </div>
+                
+                <a href="https://www.bbc.com/news/articles/c1jkw18e19jo" target="_blank" class="buy-now inline-block">
+                    READ FULL ARTICLE
+                </a>
+            </div>
+        </section>
+
+
+        <!-- How to Buy Section -->
+        <section class="relative py-16 sm:py-24 px-6 sm:px-12 mb-8 rounded-3xl overflow-hidden soft-section-bg">
+            <div class="relative z-10">
+                <div class="text-center mb-12 sm:mb-16">
+                        <h2 id="steps" class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">HOW TO BUY MENCHO</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+                        <div class="step-box soft-card p-6 sm:p-8 rounded-xl text-center transition-all duration-300 hover:shadow-xl">
+                        <img src="./images/wallet.png" alt="Wallet Icon" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full">
+                            <h3 class="text-lg sm:text-xl font-semibold mb-3 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">1. CREATE WALLET</h3>
+                            <p class="text-dahlia-blue-gray text-sm sm:text-base">Download Phantom or Solflare and create your wallet.</p>
+                        </div>
+
+                        <div class="step-box soft-card p-6 sm:p-8 rounded-xl text-center transition-all duration-300 hover:shadow-xl">
+                        <img src="./images/solana-sol-logo.svg" alt="SOL Icon" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full">
+                            <h3 class="text-lg sm:text-xl font-semibold mb-3 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">2. GET SOME SOL</h3>
+                            <p class="text-dahlia-blue-gray text-sm sm:text-base">Purchase SOL on an exchange and transfer it to your wallet.</p>
+                        </div>
+
+                        <div class="step-box soft-card p-6 sm:p-8 rounded-xl text-center transition-all duration-300 hover:shadow-xl">
+                        <img src="./images/raydium-ray-logo.svg" alt="Swap Icon" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full">
+                            <h3 class="text-lg sm:text-xl font-semibold mb-3 text-dahlia-charcoal" style="font-family: 'Playfair Display', serif;">3. CONNECT & SWAP</h3>
+                            <p class="text-dahlia-blue-gray text-sm sm:text-base">Use the swap feature in your wallet to buy $MENCHO using the pair address.</p>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Links -->
+        <div class="flex justify-center gap-6 py-8 mb-8 flex-wrap">
+            <a href="https://x.com/elmenchofan" target="_blank" class="soft-card px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:shadow-lg flex items-center gap-4">
+                <img src="./images/xlogo.png" alt="X" class="w-6 h-6 sm:w-8 sm:h-8">
+                
+            <a href="https://www.tiktok.com/tag/mencho?lang=en" target="_blank" class="soft-card px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:shadow-lg flex items-center gap-4">
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046123.png" alt="TikTok" class="w-6 h-6 sm:w-8 sm:h-8">
+                <span class="text-dahlia-charcoal font-semibold text-sm sm:text-base">TIKTOK</span>
+
+            </a>
+            <a href="https://dexscreener.com/solana/9bTf3SMyrCf9Rufehn8vtMd2BFEZGRkHTtB4KY3UZemr" target="_blank" class="soft-card px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:shadow-lg flex items-center gap-4">
+                <img src="https://dexscreener.com/favicon.png" alt="DexScreener" class="w-6 h-6 sm:w-8 sm:h-8">
+                <span class="text-dahlia-charcoal font-semibold text-sm sm:text-base">DEXSCREENER</span>
+            </a>
+            <a href="https://pump.fun/coin/2WdiVXhhV4ZFjDJszWx4iqgMfACRNFutxfXEWxWPpump" target="_blank" class="soft-card px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:shadow-lg flex items-center gap-4">
+                <img src="https://pump.fun/favicon.ico" alt="Pump.fun" class="w-6 h-6 sm:w-8 sm:h-8">
+                <span class="text-dahlia-charcoal font-semibold text-sm sm:text-base">PUMPFUN</span>
+            </a>
+        </div>
+
+        <!-- CONTRACT ADDRESS BOX -->
+        <div class="flex justify-center mt-10 mb-8">
+            <div class="soft-card rounded-2xl p-6 w-full max-w-xl">
+                <p class="text-center text-xs tracking-widest text-dahlia-blue-gray mb-4 font-semibold">
+                  CONTRACT ADDRESS
+                </p>
+
+                <div class="flex items-center justify-between gap-3 bg-dahlia-cream border border-dahlia-border rounded-xl p-3">
+                  <span id="contractAddress" class="text-dahlia-charcoal text-sm break-all">
+                   2WdiVXhhV4ZFjDJszWx4iqgMfACRNFutxfXEWxWPpump
+                  </span>
+
+                  <button onclick="copyCA()" 
+                    class="bg-dahlia-charcoal text-dahlia-cream text-xs font-semibold px-4 py-2 rounded-lg hover:bg-dahlia-taupe transition-all duration-300">
+                    COPY
+                  </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer-slide text-center py-8 px-4 border-t border-dahlia-border text-dahlia-blue-gray mt-16" style="background-color: #D8CFD0; opacity: 1 !important;">
+            <p>Copyright © 2026 El Mencho. All rights reserved.</p>    
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
